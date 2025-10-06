@@ -1,0 +1,9 @@
+POST {{host}}/api/users/register
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Email": "test@test.com",
+    "Password": "Test1234!",
+    "Role": ""
+}

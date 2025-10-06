@@ -1,0 +1,2 @@
+### Get Active Carriers
+GET {{host}}/api/carriers/active

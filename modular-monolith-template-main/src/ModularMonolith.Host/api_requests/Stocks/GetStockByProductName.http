@@ -1,0 +1,2 @@
+### Get Stocks by Product Name
+GET {{host}}/api/stocks/by-product-name?productName=Gorgeous Granite Hat

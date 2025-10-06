@@ -1,0 +1,3 @@
+### Dispatch Shipment
+POST {{host}}/api/shipments/dispatch/10000005
+Content-Type: application/json

@@ -1,0 +1,7 @@
+### Create Carrier
+POST {{host}}/api/carriers
+Content-Type: application/json
+
+{
+  "name": "DHL Express"
+}
