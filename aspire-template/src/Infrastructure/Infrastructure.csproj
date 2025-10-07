@@ -7,6 +7,7 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<InternalsVisibleTo Include="ArchitectureTests" />
+    <InternalsVisibleTo Include="ArchitectureTests" />
   </ItemGroup>
 
 </Project>
