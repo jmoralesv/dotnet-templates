@@ -350,6 +350,9 @@ dotnet_diagnostic.CS8618.severity = none
 # IDE0005
 dotnet_diagnostic.IDE0005.severity = none
 
+# IDE0032: Use auto-implemented property
+dotnet_diagnostic.IDE0032.severity = none
+
 # IDE0046: Convert to conditional expression
 dotnet_diagnostic.IDE0046.severity = none
 
