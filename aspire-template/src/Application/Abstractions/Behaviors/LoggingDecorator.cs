@@ -4,7 +4,7 @@ using SharedKernel;
 
 namespace Application.Abstractions.Behaviors;
 
-internal static class LoggingDecorator
+internal static partial class LoggingDecorator
 {
     internal sealed class CommandHandler<TCommand, TResponse>(
         ICommandHandler<TCommand, TResponse> innerHandler,
@@ -16,24 +16,17 @@ internal static class LoggingDecorator
         {
             string commandName = typeof(TCommand).Name;
 
-            logger.LogInformation("Processing command {Command}", commandName);
+            LogProcessingCommand(logger, commandName);
 
             Result<TResponse> result = await innerHandler.Handle(command, cancellationToken);
 
             if (result.IsSuccess)
             {
-                logger.LogInformation("Completed command {Command}", commandName);
+                LogCompletedCommand(logger, commandName);
             }
             else
             {
-                var data = new Dictionary<string, object>
-                {
-                    ["Error"] = result.Error
-                };
-                using (logger.BeginScope(data))
-                {
-                    logger.LogError("Completed command {Command} with error", commandName);
-                }
+                LogCompletedCommandWithError(logger, commandName, result.Error);
             }
 
             return result;
@@ -50,24 +43,17 @@ internal static class LoggingDecorator
         {
             string commandName = typeof(TCommand).Name;
 
-            logger.LogInformation("Processing command {Command}", commandName);
+            LogProcessingCommand(logger, commandName);
 
             Result result = await innerHandler.Handle(command, cancellationToken);
 
             if (result.IsSuccess)
             {
-                logger.LogInformation("Completed command {Command}", commandName);
+                LogCompletedCommand(logger, commandName);
             }
             else
             {
-                var data = new Dictionary<string, object>
-                {
-                    ["Error"] = result.Error
-                };
-                using (logger.BeginScope(data))
-                {
-                    logger.LogError("Completed command {Command} with error", commandName);
-                }
+                LogCompletedCommandWithError(logger, commandName, result.Error);
             }
 
             return result;
@@ -84,27 +70,38 @@ internal static class LoggingDecorator
         {
             string queryName = typeof(TQuery).Name;
 
-            logger.LogInformation("Processing query {Query}", queryName);
+            LogProcessingQuery(logger, queryName);
 
             Result<TResponse> result = await innerHandler.Handle(query, cancellationToken);
 
             if (result.IsSuccess)
             {
-                logger.LogInformation("Completed query {Query}", queryName);
+                LogCompletedQuery(logger, queryName);
             }
             else
             {
-                var data = new Dictionary<string, object>
-                {
-                    ["Error"] = result.Error
-                };
-                using (logger.BeginScope(data))
-                {
-                    logger.LogError("Completed query {Query} with error", queryName);
-                }
+                LogCompletedQueryWithError(logger, queryName, result.Error);
             }
 
             return result;
         }
     }
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Processing command {CommandName}")]
+    private static partial void LogProcessingCommand(ILogger logger, string commandName);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Completed command {CommandName}")]
+    private static partial void LogCompletedCommand(ILogger logger, string commandName);
+
+    [LoggerMessage(Level = LogLevel.Error, Message = "Completed command {CommandName} with error: {Error}")]
+    private static partial void LogCompletedCommandWithError(ILogger logger, string commandName, Error error);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Processing query {QueryName}")]
+    private static partial void LogProcessingQuery(ILogger logger, string queryName);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Completed query {QueryName}")]
+    private static partial void LogCompletedQuery(ILogger logger, string queryName);
+
+    [LoggerMessage(Level = LogLevel.Error, Message = "Completed query {QueryName} with error: {Error}")]
+    private static partial void LogCompletedQueryWithError(ILogger logger, string queryName, Error error);
 }
