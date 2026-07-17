@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using Modules.Shipments.Tests.Integration.Configuration;
@@ -11,9 +11,9 @@ namespace Modules.Shipments.Tests.Integration.Tests.ReceiveShipment;
 public class ReceiveShipmentTests(CustomWebApplicationFactory webFactory)
 	: BaseTest(webFactory), IAsyncLifetime
 {
-	public Task InitializeAsync() => Task.CompletedTask;
+	public ValueTask InitializeAsync() => ValueTask.CompletedTask;
 
-	public async Task DisposeAsync() => await WebFactory.ResetDatabaseAsync();
+	public async ValueTask DisposeAsync() => await WebFactory.ResetDatabaseAsync();
 
 	[Fact]
 	public async Task ReceiveShipment_ShouldReceiveShipment_WhenShipmentExists()

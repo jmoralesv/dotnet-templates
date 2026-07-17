@@ -10,6 +10,42 @@ namespace Modules.Common.Application;
 public class EventPublisher(IServiceProvider serviceProvider, ILogger<EventPublisher> logger)
     : IEventPublisher
 {
+    private static readonly Action<ILogger, string, Exception?> PublishingEventMessage =
+        LoggerMessage.Define<string>(
+            LogLevel.Debug,
+            new EventId(1, nameof(PublishAsync)),
+            "Publishing event {EventType}");
+
+    private static readonly Action<ILogger, string, Exception?> NoHandlersRegisteredMessage =
+        LoggerMessage.Define<string>(
+            LogLevel.Debug,
+            new EventId(2, nameof(PublishAsync)),
+            "No handlers registered for event {EventType}");
+
+    private static readonly Action<ILogger, int, string, Exception?> FoundHandlersMessage =
+        LoggerMessage.Define<int, string>(
+            LogLevel.Debug,
+            new EventId(3, nameof(PublishAsync)),
+            "Found {HandlerCount} handlers for event {EventType}");
+
+    private static readonly Action<ILogger, string, Exception?> HandlersThrewExceptionsMessage =
+        LoggerMessage.Define<string>(
+            LogLevel.Error,
+            new EventId(4, nameof(PublishAsync)),
+            "One or more handlers threw exceptions while processing event {EventType}");
+
+    private static readonly Action<ILogger, string, Exception?> SuccessfullyPublishedEventMessage =
+        LoggerMessage.Define<string>(
+            LogLevel.Debug,
+            new EventId(5, nameof(PublishAsync)),
+            "Successfully published event {EventType}");
+
+    private static readonly Action<ILogger, string, string, Exception?> ErrorHandlingEventMessage =
+        LoggerMessage.Define<string, string>(
+            LogLevel.Error,
+            new EventId(6, nameof(PublishAsync)),
+            "Error handling event {EventType} with handler {HandlerType}");
+
 	/// <summary>
 	/// Publishes an event of the specified type to all registered event handlers asynchronously.
 	/// </summary>
@@ -28,7 +64,7 @@ public class EventPublisher(IServiceProvider serviceProvider, ILogger<EventPubli
         where TEvent : IEvent
     {
         var eventType = @event.GetType();
-        logger.LogDebug("Publishing event {EventType}", eventType.Name);
+        PublishingEventMessage(logger, eventType.Name, null);
 
         try
         {
@@ -37,11 +73,11 @@ public class EventPublisher(IServiceProvider serviceProvider, ILogger<EventPubli
 
             if (handlers.Length == 0)
             {
-                logger.LogDebug("No handlers registered for event {EventType}", eventType.Name);
+                NoHandlersRegisteredMessage(logger, eventType.Name, null);
                 return;
             }
 
-            logger.LogDebug("Found {HandlerCount} handlers for event {EventType}", handlers.Length, eventType.Name);
+            FoundHandlersMessage(logger, handlers.Length, eventType.Name, null);
 
             // Execute all handlers and collect results
             var handlerTasks = handlers
@@ -58,11 +94,11 @@ public class EventPublisher(IServiceProvider serviceProvider, ILogger<EventPubli
 
             if (exceptions.Count > 0)
             {
-                logger.LogError("One or more handlers threw exceptions while processing event {EventType}", eventType.Name);
+                HandlersThrewExceptionsMessage(logger, eventType.Name, null);
                 throw new AggregateException($"One or more handlers threw exceptions while processing event {eventType.Name}", exceptions!);
             }
 
-            logger.LogDebug("Successfully published event {EventType}", eventType.Name);
+            SuccessfullyPublishedEventMessage(logger, eventType.Name, null);
         }
         catch (AggregateException)
         {
@@ -88,8 +124,7 @@ public class EventPublisher(IServiceProvider serviceProvider, ILogger<EventPubli
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error handling event {EventType} with handler {HandlerType}",
-                @event.GetType().Name, handler.GetType().Name);
+            ErrorHandlingEventMessage(logger, @event.GetType().Name, handler.GetType().Name, ex);
             return ex;
         }
     }

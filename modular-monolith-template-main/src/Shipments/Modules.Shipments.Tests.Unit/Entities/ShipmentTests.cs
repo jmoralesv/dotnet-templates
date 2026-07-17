@@ -1,4 +1,4 @@
-﻿using Modules.Shipments.Domain.Entities;
+using Modules.Shipments.Domain.Entities;
 using Modules.Shipments.Domain.Enums;
 using Modules.Shipments.Domain.ValueObjects;
 

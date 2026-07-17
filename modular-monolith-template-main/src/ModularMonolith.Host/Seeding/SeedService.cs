@@ -22,7 +22,9 @@ public class SeedService(
 
     public async Task SeedDataAsync()
     {
+#pragma warning disable S2245 // Random seed is used for deterministic development/test data only.
 	    Randomizer.Seed = new Random(4503);
+#pragma warning restore S2245
 
         if (await shipmentsContext.Shipments.AnyAsync())
         {

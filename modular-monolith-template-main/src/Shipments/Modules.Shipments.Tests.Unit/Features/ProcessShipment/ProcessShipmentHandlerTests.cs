@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Modules.Shipments.Domain.Entities;
 using Modules.Shipments.Domain.Enums;

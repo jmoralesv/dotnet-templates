@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,9 +20,9 @@ public class GetShipmentByNumberTests(CustomWebApplicationFactory webFactory)
 		PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 	};
 
-	public Task InitializeAsync() => Task.CompletedTask;
+	public ValueTask InitializeAsync() => ValueTask.CompletedTask;
 
-	public async Task DisposeAsync() => await WebFactory.ResetDatabaseAsync();
+	public async ValueTask DisposeAsync() => await WebFactory.ResetDatabaseAsync();
 
 	[Fact]
 	public async Task GetShipmentByNumber_ShouldReturnShipment_WhenShipmentExists()

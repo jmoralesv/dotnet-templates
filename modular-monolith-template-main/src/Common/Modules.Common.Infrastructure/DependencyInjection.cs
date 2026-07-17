@@ -30,7 +30,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddHostOpenTelemetry(
+    private static void AddHostOpenTelemetry(
         this IServiceCollection services,
         params string[] activityModuleNames)
     {
@@ -47,11 +47,9 @@ public static class DependencyInjection
 
                 tracing.AddOtlpExporter();
             });
-
-        return services;
     }
 
-    private static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions<AuthConfiguration>()
             .Bind(configuration.GetSection(nameof(AuthConfiguration)));
@@ -81,15 +79,11 @@ public static class DependencyInjection
             {
                 options.TokenValidationParameters = tokenValidationParameters;
             });
-
-        return services;
     }
 
-    private static IServiceCollection AddClaimsAuthorization(this IServiceCollection services)
+    private static void AddClaimsAuthorization(this IServiceCollection services)
     {
         services.AddSingleton<IConfigureOptions<AuthorizationOptions>, AuthorizationConfigureOptions>();
         services.AddAuthorization();
-
-        return services;
     }
 }

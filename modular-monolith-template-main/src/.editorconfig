@@ -72,6 +72,12 @@ dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 
+# CA1873: Logging arguments in this codebase are typically property/local access, not expensive operations.
+dotnet_diagnostic.CA1873.severity = suggestion
+
+# xUnit1051: Existing tests use CancellationToken.None; adopt TestContext.Current.CancellationToken gradually.
+dotnet_diagnostic.xUnit1051.severity = suggestion
+
 # Field preferences
 dotnet_style_readonly_field = true:error
 

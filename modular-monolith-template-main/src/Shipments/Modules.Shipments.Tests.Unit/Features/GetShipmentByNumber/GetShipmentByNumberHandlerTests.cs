@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Modules.Shipments.Domain.Entities;
 using Modules.Shipments.Domain.ValueObjects;
 using Modules.Shipments.Features.Features.GetShipmentByNumber;

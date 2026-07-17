@@ -1,4 +1,4 @@
-﻿using Modules.Shipments.Domain.Enums;
+using Modules.Shipments.Domain.Enums;
 
 namespace Modules.Shipments.Tests.Integration.Contracts.Responses;
 

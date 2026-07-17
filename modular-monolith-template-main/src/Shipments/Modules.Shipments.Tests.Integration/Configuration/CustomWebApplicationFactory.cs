@@ -1,4 +1,4 @@
-﻿using System.Data.Common;
+using System.Data.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ModularMonolith.Host;
@@ -10,8 +10,7 @@ namespace Modules.Shipments.Tests.Integration.Configuration;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<IApiMarker>, IAsyncLifetime
 {
-    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
-		    .WithImage("postgres:latest")
+    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder("postgres:latest")
 		    .WithDatabase("test")
 		    .WithUsername("admin")
 		    .WithPassword("admin")
@@ -22,7 +21,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<IApiMarker>, IA
 
     public HttpClient HttpClient { get; private set; } = null!;
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
 	    await _dbContainer.StartAsync();
 
@@ -34,7 +33,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<IApiMarker>, IA
 	    await InitializeRespawnerAsync();
     }
 
-    public new async Task DisposeAsync()
+    public new async ValueTask DisposeAsync()
     {
         await _dbContainer.DisposeAsync();
         await _dbConnection.DisposeAsync();

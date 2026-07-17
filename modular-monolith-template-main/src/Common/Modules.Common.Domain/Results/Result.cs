@@ -18,7 +18,7 @@ public static class Result
 
 public readonly partial record struct Result<TValue> : IResult<TValue>
 {
-    private readonly TValue? _value = default;
+    private TValue? InternalValue { get; }
 
     private Result(TValue value)
     {
@@ -27,7 +27,7 @@ public readonly partial record struct Result<TValue> : IResult<TValue>
             throw new ArgumentNullException(nameof(value));
         }
 
-        _value = value;
+        InternalValue = value;
     }
 
     private Result(Error error)
@@ -75,7 +75,7 @@ public readonly partial record struct Result<TValue> : IResult<TValue>
                 throw new InvalidOperationException("The Value property cannot be accessed when Errors property is not empty. Check IsSuccess or IsError before accessing the Value.");
             }
 
-            return _value;
+            return InternalValue;
         }
     }
 
