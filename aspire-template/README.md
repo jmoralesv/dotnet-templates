@@ -1,6 +1,21 @@
 # Clean Architecture Template
 
-What's included in the template?
+A .NET 10.0 solution template built with Clean Architecture, Aspire, and Central Package Management.
+
+## Requirements
+
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Visual Studio 2026 (or any IDE that supports .NET 10.0 and the new `.slnx` solution format)
+
+## Central Package Management
+
+This repository uses [Central Package Management](https://learn.microsoft.com/nuget/consume-packages/central-package-management) to keep NuGet package versions consistent across all projects:
+
+- `Directory.Build.props` — shared MSBuild properties such as `TargetFramework`, nullable reference types, code-analysis settings, and common package references (e.g. `SonarAnalyzer.CSharp`).
+- `Directory.Packages.props` — single source of truth for every package version used in the solution. All `.csproj` files reference packages without specifying a version.
+- `nuget.config` — configures a single NuGet package source with package source mapping.
+
+## What's included in the template?
 
 - SharedKernel project with common Domain-Driven Design abstractions.
 - Domain layer with sample entities.
