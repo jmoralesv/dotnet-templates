@@ -1,0 +1,51 @@
+<Solution>
+  <Folder Name="/Common/">
+    <Project Path="Common/Modules.Common.API/Modules.Common.API.csproj" />
+    <Project Path="Common/Modules.Common.Application/Modules.Common.Application.csproj" />
+    <Project Path="Common/Modules.Common.Domain/Modules.Common.Domain.csproj" />
+    <Project Path="Common/Modules.Common.Infrastructure/Modules.Common.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Common/Tests/">
+    <Project Path="Common/Modules.Common.Result.Tests.Unit/Modules.Common.Result.Tests.Unit.csproj" />
+    <Project Path="Common/Modules.Common.Tests.Architecture/Modules.Common.Tests.Architecture.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Carriers/">
+    <Project Path="Carriers/Modules.Carriers.Domain/Modules.Carriers.Domain.csproj" />
+    <Project Path="Carriers/Modules.Carriers.Features/Modules.Carriers.Features.csproj" />
+    <Project Path="Carriers/Modules.Carriers.Infrastructure/Modules.Carriers.Infrastructure.csproj" />
+    <Project Path="Carriers/Modules.Carriers.PublicApi/Modules.Carriers.PublicApi.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Shipments/">
+    <Project Path="Shipments/Modules.Shipments.Domain/Modules.Shipments.Domain.csproj" />
+    <Project Path="Shipments/Modules.Shipments.Features/Modules.Shipments.Features.csproj" />
+    <Project Path="Shipments/Modules.Shipments.Infrastructure/Modules.Shipments.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Shipments/Tests/">
+    <Project Path="Shipments/Modules.Shipments.Tests.Integration/Modules.Shipments.Tests.Integration.csproj" />
+    <Project Path="Shipments/Modules.Shipments.Tests.Unit/Modules.Shipments.Tests.Unit.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Stocks/">
+    <Project Path="Stocks/Modules.Stocks.Domain/Modules.Stocks.Domain.csproj" />
+    <Project Path="Stocks/Modules.Stocks.Features/Modules.Stocks.Features.csproj" />
+    <Project Path="Stocks/Modules.Stocks.Infrastructure/Modules.Stocks.Infrastructure.csproj" />
+    <Project Path="Stocks/Modules.Stocks.PublicApi/Modules.Stocks.PublicApi.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Users/">
+    <Project Path="Users/Modules.Users.Domain/Modules.Users.Domain.csproj" />
+    <Project Path="Users/Modules.Users.Features/Modules.Users.Features.csproj" />
+    <Project Path="Users/Modules.Users.Infrastructure/Modules.Users.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Users/Tests/" />
+  <Folder Name="/Solution Items/">
+    <File Path="../.gitignore" />
+    <File Path="../README.md" />
+    <File Path=".dockerignore" />
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="docker-compose.yml" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Project Path="ModularMonolith.Host/ModularMonolith.Host.csproj" />
+</Solution>
