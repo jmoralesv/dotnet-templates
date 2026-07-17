@@ -4,6 +4,12 @@
 
 This project is a modern, well-structured template for building maintainable Modular Monolith applications in .NET. It demonstrates how to organize code into separate modules that are loosely coupled yet deployed as a single application. The template shows proper domain modeling, clean separation of concerns, and smart handling of cross-module communication - all without overwhelming complexity. For a comprehensive introduction, see [Building a Modular Monolith with Vertical Slice Architecture in .NET](https://antondevtips.com/blog/building-a-modular-monolith-with-vertical-slice-architecture-in-dotnet).
 
+## Prerequisites
+
+- **.NET 10.0 SDK**: The solution targets .NET 10.0 and uses C# 14 language features.
+- **Visual Studio 2026** (or another IDE that supports .NET 10.0 / SLNX solutions, such as JetBrains Rider or Visual Studio Code with the C# Dev Kit).
+- **Docker and Docker Compose**: Required to run the infrastructure services (PostgreSQL, Seq, Jaeger) and the integration tests.
+
 ## Modules Description
 
 The application consists of 4 main modules:
@@ -118,7 +124,7 @@ The project includes comprehensive tests:
 
 ### Testing Packages
 
-- **xUnit**: Primary testing framework with extensible test runners
+- **xunit.v3**: Primary testing framework with extensible test runners
 - **NSubstitute**: Mocking library for creating test doubles
 - **Microsoft.EntityFrameworkCore.InMemory**: In-memory database for unit testing
 - **Microsoft.AspNetCore.Mvc.Testing**: WebApplicationFactory for integration testing
@@ -178,3 +184,15 @@ The project includes several key configuration files that standardize developmen
 - **Directory.Packages.props**: Centralizes NuGet package version management
   - Ensures consistent package versions across all projects
   - Simplifies updates by changing versions in a single location
+
+## Central Package Management
+
+This solution uses .NET Central Package Management (CPM) to keep package versions consistent across all projects:
+
+- **`Directory.Build.props`** (in `/src`): Defines shared MSBuild properties and analyzer references for every project in the repository. It enables nullable reference types, implicit usings, `TreatWarningsAsErrors`, and references the Meziantou, SonarAnalyzer, and Roslynator analyzers so that all assemblies are built with the same quality gates.
+
+- **`Directory.Packages.props`** (in `/src`): Declares a single `PackageVersion` entry for every NuGet package used in the solution. Individual `.csproj` files reference packages without specifying a version (`<PackageReference Include="..." />`), which guarantees that all projects use the same package versions and that updates only need to be made in one place.
+
+- **`nuget.config`** (in `/src`): Configures the NuGet package source mapping so that all packages resolve from `nuget.org`.
+
+To add or update a package, edit `Directory.Packages.props` and run `dotnet restore` from the `src` folder.
